@@ -1,0 +1,171 @@
+Spectre and Meltdown mitigation detection tool v0.45
+
+Checking for vulnerabilities on current system
+Kernel is [35mLinux 5.13.0-1022-aws #24~20.04.1-Ubuntu SMP Thu Apr 7 22:10:15 UTC 2022 x86_64[0m
+CPU is [35mIntel(R) Xeon(R) Platinum 8375C CPU @ 2.90GHz[0m
+
+[1;34mHardware check[0m
+* Hardware support (CPU microcode) for mitigation techniques
+  * Indirect Branch Restricted Speculation (IBRS)
+    * SPEC_CTRL MSR is available: [42m[30m YES [0m
+    * CPU indicates IBRS capability: [42m[30m YES [0m (SPEC_CTRL feature bit)
+  * Indirect Branch Prediction Barrier (IBPB)
+    * CPU indicates IBPB capability: [42m[30m YES [0m (SPEC_CTRL feature bit)
+  * Single Thread Indirect Branch Predictors (STIBP)
+    * SPEC_CTRL MSR is available: [42m[30m YES [0m
+    * CPU indicates STIBP capability: [42m[30m YES [0m (Intel STIBP feature bit)
+  * Speculative Store Bypass Disable (SSBD)
+    * CPU indicates SSBD capability: [42m[30m YES [0m (Intel SSBD)
+  * L1 data cache invalidation
+    * CPU indicates L1D flush capability: [42m[30m YES [0m (L1D flush feature bit)
+  * Microarchitectural Data Sampling
+    * VERW instruction is available: [42m[30m YES [0m (MD_CLEAR feature bit)
+  * Indirect Branch Predictor Controls
+    * Indirect Predictor Disable feature is available: [43m[30m NO [0m
+    * Bottomless RSB Disable feature is available: [43m[30m NO [0m
+    * BHB-Focused Indirect Predictor Disable feature is available: [43m[30m NO [0m
+  * Enhanced IBRS (IBRS_ALL)
+    * CPU indicates ARCH_CAPABILITIES MSR availability: [42m[30m YES [0m
+    * ARCH_CAPABILITIES MSR advertises IBRS_ALL capability: [42m[30m YES [0m
+  * CPU explicitly indicates not being affected by Meltdown/L1TF (RDCL_NO): [42m[30m YES [0m
+  * CPU explicitly indicates not being affected by Variant 4 (SSB_NO): [43m[30m NO [0m
+  * CPU/Hypervisor indicates L1D flushing is not necessary on this system: [42m[30m YES [0m
+  * Hypervisor indicates host CPU might be affected by RSB underflow (RSBA): [44m[30m NO [0m
+  * CPU explicitly indicates not being affected by Microarchitectural Data Sampling (MDS_NO): [42m[30m YES [0m
+  * CPU explicitly indicates not being affected by TSX Asynchronous Abort (TAA_NO): [43m[30m NO [0m
+  * CPU explicitly indicates not being affected by iTLB Multihit (PSCHANGE_MSC_NO): [42m[30m YES [0m
+  * CPU explicitly indicates having MSR for TSX control (TSX_CTRL_MSR): [43m[30m NO [0m
+  * CPU supports Transactional Synchronization Extensions (TSX): [43m[30m NO [0m
+  * CPU supports Software Guard Extensions (SGX): [42m[30m NO [0m
+  * CPU supports Special Register Buffer Data Sampling (SRBDS): [42m[30m NO [0m
+  * CPU microcode is known to cause stability problems: [44m[30m NO [0m (family 0x6 model 0x6a stepping 0x6 ucode 0xd000331 cpuid 0x606a6)
+  * CPU microcode is the latest known available version: [42m[30m YES [0m (latest version is 0xd000331 dated 2021/12/03 according to builtin firmwares DB v222+i20220208)
+* CPU vulnerability to the speculative execution attack variants
+  * Affected by CVE-2017-5753 (Spectre Variant 1, bounds check bypass): [43m[30m YES [0m
+  * Affected by CVE-2017-5715 (Spectre Variant 2, branch target injection): [43m[30m YES [0m
+  * Affected by CVE-2017-5754 (Variant 3, Meltdown, rogue data cache load): [42m[30m NO [0m
+  * Affected by CVE-2018-3640 (Variant 3a, rogue system register read): [43m[30m YES [0m
+  * Affected by CVE-2018-3639 (Variant 4, speculative store bypass): [43m[30m YES [0m
+  * Affected by CVE-2018-3615 (Foreshadow (SGX), L1 terminal fault): [42m[30m NO [0m
+  * Affected by CVE-2018-3620 (Foreshadow-NG (OS), L1 terminal fault): [43m[30m YES [0m
+  * Affected by CVE-2018-3646 (Foreshadow-NG (VMM), L1 terminal fault): [43m[30m YES [0m
+  * Affected by CVE-2018-12126 (Fallout, microarchitectural store buffer data sampling (MSBDS)): [42m[30m NO [0m
+  * Affected by CVE-2018-12130 (ZombieLoad, microarchitectural fill buffer data sampling (MFBDS)): [42m[30m NO [0m
+  * Affected by CVE-2018-12127 (RIDL, microarchitectural load port data sampling (MLPDS)): [42m[30m NO [0m
+  * Affected by CVE-2019-11091 (RIDL, microarchitectural data sampling uncacheable memory (MDSUM)): [42m[30m NO [0m
+  * Affected by CVE-2019-11135 (ZombieLoad V2, TSX Asynchronous Abort (TAA)): [42m[30m NO [0m
+  * Affected by CVE-2018-12207 (No eXcuses, iTLB Multihit, machine check exception on page size changes (MCEPSC)): [43m[30m YES [0m
+  * Affected by CVE-2020-0543 (Special Register Buffer Data Sampling (SRBDS)): [42m[30m NO [0m
+
+[1;34mCVE-2017-5753 aka 'Spectre Variant 1, bounds check bypass'[0m
+* Mitigated according to the /sys interface: [42m[30m YES [0m (Mitigation: usercopy/swapgs barriers and __user pointer sanitization)
+* Kernel has array_index_mask_nospec: [43m[30m UNKNOWN [0m (couldn't check (missing 'readelf' tool, please install it, usually it's in the 'binutils' package))
+* Kernel has the Red Hat/Ubuntu patch: [43m[30m UNKNOWN [0m (missing 'strings' tool, please install it, usually it's in the binutils package)
+* Kernel has mask_nospec64 (arm64): [43m[30m UNKNOWN [0m (couldn't check (missing 'readelf' tool, please install it, usually it's in the 'binutils' package))
+* Kernel has array_index_nospec (arm64): [43m[30m UNKNOWN [0m (couldn't check (missing 'readelf' tool, please install it, usually it's in the 'binutils' package))
+* Checking count of LFENCE instructions following a jump in kernel... [43m[30m UNKNOWN [0m (couldn't check (missing 'readelf' tool, please install it, usually it's in the 'binutils' package))
+> [46m[30mSTATUS:[0m [42m[30m NOT VULNERABLE [0m (Mitigation: usercopy/swapgs barriers and __user pointer sanitization)
+
+[1;34mCVE-2017-5715 aka 'Spectre Variant 2, branch target injection'[0m
+* Mitigated according to the /sys interface: [42m[30m YES [0m (Mitigation: Enhanced IBRS, IBPB: conditional, RSB filling)
+* Mitigation 1
+  * Kernel is compiled with IBRS support: [42m[30m YES [0m
+    * IBRS enabled and active: [42m[30m YES [0m (Enhanced flavor, performance impact will be greatly reduced)
+  * Kernel is compiled with IBPB support: [42m[30m YES [0m
+    * IBPB enabled and active: [42m[30m YES [0m
+* Mitigation 2
+  * Kernel has branch predictor hardening (arm): [43m[30m NO [0m
+  * Kernel compiled with retpoline option: [42m[30m YES [0m
+> [46m[30mSTATUS:[0m [42m[30m NOT VULNERABLE [0m (Enhanced IBRS + IBPB are mitigating the vulnerability)
+
+[1;34mCVE-2017-5754 aka 'Variant 3, Meltdown, rogue data cache load'[0m
+* Mitigated according to the /sys interface: [42m[30m YES [0m (Not affected)
+* Kernel supports Page Table Isolation (PTI): [42m[30m YES [0m
+  * PTI enabled and active: [43m[30m NO [0m
+  * Reduced performance impact of PTI: [42m[30m YES [0m (CPU supports INVPCID, performance impact of PTI will be greatly reduced)
+* Running as a Xen PV DomU: [44m[30m NO [0m
+> [46m[30mSTATUS:[0m [42m[30m NOT VULNERABLE [0m (your CPU vendor reported your CPU model as not affected)
+
+[1;34mCVE-2018-3640 aka 'Variant 3a, rogue system register read'[0m
+* CPU microcode mitigates the vulnerability: [42m[30m YES [0m
+> [46m[30mSTATUS:[0m [42m[30m NOT VULNERABLE [0m (your CPU microcode mitigates the vulnerability)
+
+[1;34mCVE-2018-3639 aka 'Variant 4, speculative store bypass'[0m
+* Mitigated according to the /sys interface: [42m[30m YES [0m (Mitigation: Speculative Store Bypass disabled via prctl and seccomp)
+* Kernel supports disabling speculative store bypass (SSB): [42m[30m YES [0m (found in /proc/self/status)
+* SSB mitigation is enabled and active: [42m[30m YES [0m (per-thread through prctl)
+* SSB mitigation currently active for selected processes: [42m[30m YES [0m (ModemManager irqbalance systemd-journald systemd-logind systemd-networkd systemd-resolved systemd-timesyncd systemd-udevd)
+> [46m[30mSTATUS:[0m [42m[30m NOT VULNERABLE [0m (Mitigation: Speculative Store Bypass disabled via prctl and seccomp)
+
+[1;34mCVE-2018-3615 aka 'Foreshadow (SGX), L1 terminal fault'[0m
+* CPU microcode mitigates the vulnerability: [44m[30m N/A [0m
+> [46m[30mSTATUS:[0m [42m[30m NOT VULNERABLE [0m (your CPU vendor reported your CPU model as not affected)
+
+[1;34mCVE-2018-3620 aka 'Foreshadow-NG (OS), L1 terminal fault'[0m
+* Mitigated according to the /sys interface: [42m[30m YES [0m (Not affected)
+* Kernel supports PTE inversion: [43m[30m UNKNOWN [0m (missing 'strings' tool, please install it)
+* PTE inversion enabled and active: [43m[30m NO [0m
+> [46m[30mSTATUS:[0m [42m[30m NOT VULNERABLE [0m (Not affected)
+
+[1;34mCVE-2018-3646 aka 'Foreshadow-NG (VMM), L1 terminal fault'[0m
+* Information from the /sys interface: Not affected
+* This system is a host running a hypervisor: [42m[30m NO [0m
+* Mitigation 1 (KVM)
+  * EPT is disabled: [44m[30m N/A [0m (the kvm_intel module is not loaded)
+* Mitigation 2
+  * L1D flush is supported by kernel: [42m[30m YES [0m (found flush_l1d in /proc/cpuinfo)
+  * L1D flush enabled: [43m[30m NO [0m
+  * Hardware-backed L1D flush supported: [42m[30m YES [0m (performance impact of the mitigation will be greatly reduced)
+  * Hyper-Threading (SMT) is enabled: [43m[30m YES [0m
+> [46m[30mSTATUS:[0m [42m[30m NOT VULNERABLE [0m (your kernel reported your CPU model as not affected)
+
+[1;34mCVE-2018-12126 aka 'Fallout, microarchitectural store buffer data sampling (MSBDS)'[0m
+* Mitigated according to the /sys interface: [42m[30m YES [0m (Not affected)
+* Kernel supports using MD_CLEAR mitigation: [42m[30m YES [0m (md_clear found in /proc/cpuinfo)
+* Kernel mitigation is enabled and active: [43m[30m NO [0m
+* SMT is either mitigated or disabled: [43m[30m NO [0m
+> [46m[30mSTATUS:[0m [42m[30m NOT VULNERABLE [0m (your CPU vendor reported your CPU model as not affected)
+
+[1;34mCVE-2018-12130 aka 'ZombieLoad, microarchitectural fill buffer data sampling (MFBDS)'[0m
+* Mitigated according to the /sys interface: [42m[30m YES [0m (Not affected)
+* Kernel supports using MD_CLEAR mitigation: [42m[30m YES [0m (md_clear found in /proc/cpuinfo)
+* Kernel mitigation is enabled and active: [43m[30m NO [0m
+* SMT is either mitigated or disabled: [43m[30m NO [0m
+> [46m[30mSTATUS:[0m [42m[30m NOT VULNERABLE [0m (your CPU vendor reported your CPU model as not affected)
+
+[1;34mCVE-2018-12127 aka 'RIDL, microarchitectural load port data sampling (MLPDS)'[0m
+* Mitigated according to the /sys interface: [42m[30m YES [0m (Not affected)
+* Kernel supports using MD_CLEAR mitigation: [42m[30m YES [0m (md_clear found in /proc/cpuinfo)
+* Kernel mitigation is enabled and active: [43m[30m NO [0m
+* SMT is either mitigated or disabled: [43m[30m NO [0m
+> [46m[30mSTATUS:[0m [42m[30m NOT VULNERABLE [0m (your CPU vendor reported your CPU model as not affected)
+
+[1;34mCVE-2019-11091 aka 'RIDL, microarchitectural data sampling uncacheable memory (MDSUM)'[0m
+* Mitigated according to the /sys interface: [42m[30m YES [0m (Not affected)
+* Kernel supports using MD_CLEAR mitigation: [42m[30m YES [0m (md_clear found in /proc/cpuinfo)
+* Kernel mitigation is enabled and active: [43m[30m NO [0m
+* SMT is either mitigated or disabled: [43m[30m NO [0m
+> [46m[30mSTATUS:[0m [42m[30m NOT VULNERABLE [0m (your CPU vendor reported your CPU model as not affected)
+
+[1;34mCVE-2019-11135 aka 'ZombieLoad V2, TSX Asynchronous Abort (TAA)'[0m
+* Mitigated according to the /sys interface: [42m[30m YES [0m (Not affected)
+* TAA mitigation is supported by kernel: [43m[30m UNKNOWN [0m (missing 'readelf' tool, please install it, usually it's in the 'binutils' package)
+* TAA mitigation enabled and active: [43m[30m NO [0m
+> [46m[30mSTATUS:[0m [42m[30m NOT VULNERABLE [0m (your CPU vendor reported your CPU model as not affected)
+
+[1;34mCVE-2018-12207 aka 'No eXcuses, iTLB Multihit, machine check exception on page size changes (MCEPSC)'[0m
+* Mitigated according to the /sys interface: [42m[30m YES [0m (Not affected)
+* This system is a host running a hypervisor: [42m[30m NO [0m
+* iTLB Multihit mitigation is supported by kernel: [43m[30m UNKNOWN [0m (missing 'readelf' tool, please install it, usually it's in the 'binutils' package)
+* iTLB Multihit mitigation enabled and active: [43m[30m NO [0m
+> [46m[30mSTATUS:[0m [42m[30m NOT VULNERABLE [0m (this system is not running a hypervisor)
+
+[1;34mCVE-2020-0543 aka 'Special Register Buffer Data Sampling (SRBDS)'[0m
+* Mitigated according to the /sys interface: [42m[30m YES [0m (Not affected)
+* SRBDS mitigation control is supported by the kernel: [43m[30m UNKNOWN [0m (missing 'readelf' tool, please install it, usually it's in the 'binutils' package)
+* SRBDS mitigation control is enabled and active: [43m[30m NO [0m
+> [46m[30mSTATUS:[0m [42m[30m NOT VULNERABLE [0m (your CPU vendor reported your CPU model as not affected)
+
+> [46m[30mSUMMARY:[0m [42m[30mCVE-2017-5753:OK[0m [42m[30mCVE-2017-5715:OK[0m [42m[30mCVE-2017-5754:OK[0m [42m[30mCVE-2018-3640:OK[0m [42m[30mCVE-2018-3639:OK[0m [42m[30mCVE-2018-3615:OK[0m [42m[30mCVE-2018-3620:OK[0m [42m[30mCVE-2018-3646:OK[0m [42m[30mCVE-2018-12126:OK[0m [42m[30mCVE-2018-12130:OK[0m [42m[30mCVE-2018-12127:OK[0m [42m[30mCVE-2019-11091:OK[0m [42m[30mCVE-2019-11135:OK[0m [42m[30mCVE-2018-12207:OK[0m [42m[30mCVE-2020-0543:OK[0m
+
+A false sense of security is worse than no security at all, see --disclaimer
